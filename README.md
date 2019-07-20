@@ -46,8 +46,9 @@
 
 | Key       | Value           |
 | --------- | --------------- |
-| Id        | 사용자 아이디   |
+| email        | 사용자 email   |
 | password  | 사용자 비밀번호 |
+| nickname        | 사용자 닉네임 |
 | privilege | 사용자 권한     |
 
 - Book
@@ -89,6 +90,9 @@
 | content          | 내용                       |
 | registrationDate | 등록날짜                   |
 |                  |                            |
+
+### URL
+회원 가입 요청 : POST /auth/register
 
 ### 추후 확장
 

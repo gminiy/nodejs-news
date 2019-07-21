@@ -13,7 +13,8 @@ const User = new Schema({
     },
     nickname: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     authority: {
         type: String,
@@ -22,7 +23,6 @@ const User = new Schema({
 });
 
 User.statics.create = function (email, password, nickname) {
-    if (!email || !password) throw Error("email and password is required");
     const user = new this({ email, password, nickname });
     
     return user.save();

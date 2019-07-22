@@ -33,5 +33,10 @@ module.exports = {
     authenticate : (passport) => {
             return passport.authenticate('local', { successRedirect: '/',
                                     failureRedirect: '/login' });
+    },
+
+    logout : (request, response) => {
+        request.logout();
+        response.redirect('/');
     }
 }

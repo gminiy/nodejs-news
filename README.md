@@ -93,6 +93,8 @@
 
 ### URL
 회원 가입 요청 : POST /auth/register
+로그인 : POST /auth/login
+
 
 ### 추후 확장
 

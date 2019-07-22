@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
+const { secret } = require('../../configs/config')
 
 describe('authController', () => {
     const authController = require('../../routes/auth/auth-controller');
     const Model = mongoose.Model;
     Model.prototype.save = jest.fn(function () {
         return new Promise ((resolve, reject) => {
-            resolve(this.email);
+            resolve(this);
         });
     });
 
@@ -24,10 +26,14 @@ describe('authController', () => {
         "send": (data) =>  data
     };
 
+    const encrypted = crypto.createHmac('sha1', secret)
+        .update(mockUserInfo.password)
+        .digest('base64')
+
     it('regist successfully', async () => {
         const sentData = await authController.regist(mockRequest, mockResponse);
         
-        expect(sentData).toEqual(mockUserInfo.email);
+        expect(sentData).toEqual(expect.objectContaining({ email: mockUserInfo.email, password: encrypted, nickname:mockUserInfo.nickname }));
     });
 
     it('regist without email', async () => {

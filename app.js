@@ -21,11 +21,13 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: db })
 }));
 
+const passport = require('./src/passport')(app);                                    
+
+app.use('/auth', require('./routes/auth')(passport));
+
 app.get('/', (req, res) => {
     res.send('hello world');
 });
-
-app.use('/auth', require('./routes/auth'));
 
 app.listen(port, () => {
     console.log(`runnning at ${port}`);

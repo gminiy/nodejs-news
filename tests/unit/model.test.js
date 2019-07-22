@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
+const { secret } = require('../../configs/config')
 
 describe('model', () => {
     describe('user', () => {
@@ -9,7 +11,10 @@ describe('model', () => {
             Model.prototype.save = jest.fn(function () {
                 return [this.email, this.password, this.nickname];
             });
-            expect(User.create(mockEmail, mockPassword, mockNickname)).toEqual([mockEmail, mockPassword, mockNickname]);
+            const encrypted = crypto.createHmac('sha1', secret)
+            .update(mockPassword)
+            .digest('base64')
+            expect(User.create(mockEmail, mockPassword, mockNickname)).toEqual([mockEmail, encrypted, mockNickname]);
         });
     });
 })

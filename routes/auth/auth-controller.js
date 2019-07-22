@@ -1,5 +1,6 @@
 const User = require('../../model/user');
-
+const crypto = require('crypto');
+const { secret } = require('../../configs/config')
 module.exports = {
     regist : (request, response) => {
         const onError = (error) => {
@@ -15,10 +16,15 @@ module.exports = {
         }
 
         const create = () => {
-                const { email, password, nickname } = request.body;
+                let { email, password, nickname } = request.body;
                 if (!email || !password || !nickname) {
                     return Promise.reject("email, password and nickname is required");
                 }
+                const encrypted = crypto.createHmac('sha1', secret)
+                .update(password)
+                .digest('base64')
+                password = encrypted;
+
                 const user = User.create( email, password, nickname )
                 return user;
         }

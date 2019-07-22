@@ -5,11 +5,7 @@ describe('authController', () => {
     const Model = mongoose.Model;
     Model.prototype.save = jest.fn(function () {
         return new Promise ((resolve, reject) => {
-            resolve({
-                "email": this.email, 
-                "password": this.password,
-                "nickname": this.nickname
-            })
+            resolve(this.email);
         });
     });
 
@@ -31,7 +27,7 @@ describe('authController', () => {
     it('regist successfully', async () => {
         const sentData = await authController.regist(mockRequest, mockResponse);
         
-        expect(sentData).toEqual(mockUserInfo);
+        expect(sentData).toEqual(mockUserInfo.email);
     });
 
     it('regist without email', async () => {

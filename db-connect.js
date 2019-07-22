@@ -10,4 +10,5 @@ module.exports = (config) => {
     db.on('error', (error) => {
         console.log(error);
     });
+    return db;
 }

@@ -23,7 +23,7 @@ module.exports = {
                 return user;
         }
 
-        const respond = (user) => response.send(user);
+        const respond = () => response.redirect('/');
 
         return create()
         .then(respond)

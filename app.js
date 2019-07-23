@@ -1,7 +1,7 @@
 const morgan = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 const app = express();
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -22,7 +22,7 @@ app.use(session({
 }));
 
 const passport = require('./src/passport')(app);                                    
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', require('./routes/auth')(passport));
 
 app.get('/', (req, res) => {

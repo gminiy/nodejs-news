@@ -25,10 +25,6 @@ const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', require('./routes/auth')(passport));
 
-app.get('/', (req, res) => {
-    res.send('hello world');
-});
-
 app.listen(port, () => {
     console.log(`runnning at ${port}`);
 });

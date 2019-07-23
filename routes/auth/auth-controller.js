@@ -1,7 +1,7 @@
 const User = require('../../model/user');
 
 module.exports = {
-    regist : (request, response) => {
+    register : (request, response) => {
         const onError = (error) => {
             if (typeof(error) === "string") {
                 response.status(409);

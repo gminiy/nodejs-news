@@ -7,12 +7,9 @@ module.exports = (app) => {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.serializeUser((user, done) => done(null, user.email));
+    passport.serializeUser((user, done) => done(null, user));
 
-    passport.deserializeUser( async (email, done) => {
-        const user = await User.findOneByEmail(email);
-        done(null, user);
-    });
+    passport.deserializeUser((user, done) => done(null, user));
 
     passport.use(new LocalStrategy(
         {

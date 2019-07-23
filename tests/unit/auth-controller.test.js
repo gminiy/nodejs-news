@@ -23,6 +23,7 @@ describe('authController', () => {
 
     const mockResponse = {
         "status": jest.fn().mockReturnValue(this),
+        "redirect" : () => {},
         "send": (data) =>  data
     };
 
@@ -30,15 +31,15 @@ describe('authController', () => {
         .update(mockUserInfo.password)
         .digest('base64')
 
-    it('regist successfully', async () => {
-        const sentData = await authController.regist(mockRequest, mockResponse);
+    it('register successfully', async () => {
+        const sentData = await authController.register(mockRequest, mockResponse);
         
         expect(sentData).toEqual(expect.objectContaining({ email: mockUserInfo.email, password: encrypted, nickname:mockUserInfo.nickname }));
     });
 
-    it('regist without email', async () => {
+    it('register without email', async () => {
         delete mockUserInfo.email;
-        await authController.regist(mockRequest, mockResponse);
+        await authController.register(mockRequest, mockResponse);
         
         expect(mockResponse.status).toHaveBeenCalledWith(409);
     });

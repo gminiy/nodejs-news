@@ -1,35 +1,16 @@
 module.exports = (app) => {
-    const passport = require('passport')
-    , LocalStrategy = require('passport-local').Strategy;
+    const passport = require('passport');
+    const JwtStrategy = require('passport-jwt').Strategy;
+    const ExtractJwt = require('passport-jwt').ExtractJwt;
+    const config = require('../configs/config')
 
-    const User = require('../model/user');
-
+    const params = {}
+    params.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+    params.secretOrKey = config.secret;
+ 
     app.use(passport.initialize());
-    app.use(passport.session());
-
-    passport.serializeUser((user, done) => done(null, user));
-
-    passport.deserializeUser((user, done) => done(null, user));
-
-    passport.use(new LocalStrategy(
-        {
-            usernameField: 'email',
-            passwordField: 'password'
-        },
-
-        async (email, password, done) => {
-            const user = await User.findOneByEmail(email)
-            if(!user) {
-                return done(null, false, { "message": "Incorrect Email"});
-            }
-
-            if(!user.verify(password)) {
-                return done(null, false, { "message": "Incorrect Password"});
-            }
-
-            done(null, user);
-        }
-    ));
+    
+    passport.use( new JwtStrategy(params, async (user, done) => done(null, user)) );
 
     return passport;
 }

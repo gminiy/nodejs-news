@@ -1,4 +1,5 @@
 const User = require('../../model/user');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     register : (request, response) => {
@@ -19,7 +20,7 @@ module.exports = {
                 if (!email || !password || !nickname) {
                     return Promise.reject("email, password and nickname is required");
                 }
-                const user = User.create( email, password, nickname )
+                const user = User.create( email, password, nickname );
                 return user;
         }
 
@@ -27,16 +28,56 @@ module.exports = {
 
         return create()
         .then(respond)
-        .catch(onError)
+        .catch(onError);
     },
 
-    authenticate : (passport) => {
-            return passport.authenticate('local', { successRedirect: '/',
-                                    failureRedirect: '/login' });
-    },
+    login : (request, response) => {
+        const { email, password } = request.body;
+        const secret = request.app.get('jwt-secret');
+    
+        const onError = (error) => {
+            console.log(error);
+            res.status(409).send(error.message);
+        }
 
-    logout : (request, response) => {
-        request.logout();
-        response.redirect('/');
+        const check = (user) => {
+            if (!user) return Promise.reject("Invalided email!");
+            if(user.verify(password)) {
+                const p = new Promise((resolve, reject) => {
+                    jwt.sign(
+                        {
+                            email: user.email,
+                            nickname: user.nickname,
+                            authority: user.authority
+                        }, 
+                        secret, 
+                        {
+                            expiresIn: '7d',
+                            issuer: 'Ingleby',
+                            subject: 'userInfo'
+                        }, (error, token) => {
+                            if (err) reject(error);
+                            resolve(token) ;
+                        })
+                    });
+                return p;
+            }
+        }
+
+        const respond = (token) => {
+            response.json({
+                "message" : 'login success',
+                token
+            });
+        }
+
+        User.findOneByEmail(email)
+        .then(check)
+        .then(respond)
+        .catch(onError);
+    },
+    
+    sendUserInfo: (request, response) => {
+        return response.json(request.user);
     }
 }

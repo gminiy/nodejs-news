@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-module.exports = (config) => {
+const config = require('./configs/db-config');
+module.exports = () => {
     mongoose.connect(config.dbURI, {useNewUrlParser: true});
     const db = mongoose.connection;
     db.on('open', () => {

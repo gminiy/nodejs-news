@@ -10,8 +10,9 @@ require('./db-connect')();
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 const passport = require('./src/passport')(app);
+app.use(passport.authenticate("jwt", { session: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', require('./routes/auth')(passport));
 app.use(function (err, req, res, next) {

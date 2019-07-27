@@ -30,9 +30,5 @@ module.exports = {
         } catch(error) {
             next(error);
         }
-    },
-    
-    sendUserInfo: (request, response) => {
-        return response.json(request.user);
     }
 }

@@ -15,7 +15,7 @@ module.exports = (app) => {
 
     passport.serializeUser((user, done) => done(null, user));
 
-    passport.use('jwt', new JwtStrategy(params, async (user, done) => done(null, user)));
+    //passport.use('jwt', new JwtStrategy(params, async (user, done) => done(null, user)));
     passport.use('google', new GoogleStrategy({
             clientID: googleCredentials.web.client_id,
             clientSecret: googleCredentials.web.client_secret,

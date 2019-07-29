@@ -4,12 +4,7 @@ const authController = require('./auth-controller');
 module.exports = (passport) => {
     router.post('/register', authController.register);
     router.post('/login', authController.login);
-    router.get('/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'] }));
-    router.get('/google/callback',
-        passport.authenticate('google', { failureRedirect: '/login.html' }),
-        (request, response) =>  {
-            response.cookie('jwt', request.user.token);
-            response.redirect('/');
-        } );
+    router.get('/google', authController.googleAuthenticate(passport));
+    router.get('/google/callback', authController.googleCallbackAuthenticate(passport), authController.setTokenToCookie);
     return router;
 }

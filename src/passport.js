@@ -1,21 +1,14 @@
 module.exports = (app) => {
     const passport = require('passport');
-    const JwtStrategy = require('passport-jwt').Strategy;
     const jwtController = require('../src/jwt-controller');
     const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-    const config = require('../configs/config')
     const googleCredentials = require('../configs/google-config');
     const User = require('../model/user');
 
-    const params = {};
-    
-    params.jwtFromRequest = jwtController.cookieExtractor;
-    params.secretOrKey = config.secret;
     app.use(passport.initialize());
 
     passport.serializeUser((user, done) => done(null, user));
 
-    //passport.use('jwt', new JwtStrategy(params, async (user, done) => done(null, user)));
     passport.use('google', new GoogleStrategy({
             clientID: googleCredentials.web.client_id,
             clientSecret: googleCredentials.web.client_secret,

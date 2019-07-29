@@ -30,5 +30,18 @@ module.exports = {
         } catch(error) {
             next(error);
         }
+    },
+
+    googleAuthenticate : (passport) => {
+        return passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'] })
+    },
+
+    googleCallbackAuthenticate : (passport) => {
+        return passport.authenticate('google', { failureRedirect: '/login.html' });
+    },
+
+    setTokenToCookie: (request, response) => {
+        response.cookie('jwt', request.user.token);
+        response.redirect('/');
     }
 }

@@ -4,11 +4,12 @@ const jwtController = require('../../src/jwt-controller');
 module.exports = {
     register : async (request, response, next) => {
         try {
-                const { email, password, nickname } = request.body;
-                if (!email || !password || !nickname) throw Error("email, password and nickname is required");
-                const user = await User.create( email, password, nickname );
-                await user.save();
-                response.redirect('/');
+            const { id, password, nickname } = request.body;
+            if (!id || !password || !nickname) throw Error("id, password and nickname is required");
+            const provider = 'local';
+            const user = await User.create( { id, password, nickname, provider } );
+            await user.save();
+            response.redirect('/');
         } catch(error) {
             next(error);
         }

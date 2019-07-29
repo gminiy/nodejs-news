@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 mongoose.set('useCreateIndex', true);
 
 const User = new Schema({
-    email: { 
+    id: { 
         type: String,
         required: true,
         unique: true
@@ -26,20 +26,24 @@ const User = new Schema({
     accessToken: {
         type: String,
         dafault: null
+    },
+    provider: {
+        type: String,
+        dafault: null
     }
 });
 
-User.statics.create = async function (email, password, nickname, accessToken) {
+User.statics.create = async function ({ id, password, nickname, accessToken, provider }) {
         accessToken = accessToken || null;
         const encrypted = crypto.createHmac('sha1', secret)
         .update(password)
         .digest('base64');
-        return user = new this({ email, password: encrypted, nickname, accessToken: accessToken });
+        return user = new this({ id, password: encrypted, nickname, accessToken, provider });
 }
 
-User.statics.findOneByEmail = function(email) {
+User.statics.findOneById = function(id) {
     return this.findOne({
-        email
+        id
     }).exec()
 }
 

@@ -16,20 +16,20 @@ module.exports = (app) => {
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                let user = await User.findOneAndUpdate({ "email": profile.emails[0].value }, { $set:{"accessToken":accessToken } },{ new:true });
+                let user = await User.findOneAndUpdate({ "id": profile.emails[0].value }, { $set:{"accessToken":accessToken } },{ new:true });
                 if (user) {
                     user.token = await jwtController.makeToken(user);;
                 } else {
                     const randomInt = +new Date();
                     const randomPassword = randomInt.toString();
-                    [ email, password, nickname ] = [profile.emails[0].value, randomPassword, profile.displayName ]
-                    user = await User.create(email, password, nickname, accessToken);
+                    [ id, password, nickname, provider ] = [ profile.emails[0].value, randomPassword, profile.displayName, 'google' ];
+                    user = await User.create({ id, password, nickname, accessToken, provider });
                     await user.save();
                     user.token = await jwtController.makeToken(user);;
                 }
                 done(null, user);
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
         }));
     return passport;

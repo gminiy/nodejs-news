@@ -9,7 +9,7 @@ module.exports = {
             const provider = 'local';
             const user = await User.create( { id, password, nickname, provider } );
             await user.save();
-            response.redirect('/');
+            return response.redirect('/');
         } catch(error) {
             next(error);
         }
@@ -18,19 +18,24 @@ module.exports = {
     login : async (request, response, next) => {
         try {
             let token;
-            const { email, password } = request.body;
-            const user = await User.findOneByEmail(email);
-            if (!user) throw Error("Invalided email!");
+            const { id, password } = request.body;
+            const user = await User.findOneById(id);
+            if (!user) throw Error("Invalided id!");
             if(user.verify(password)) {
                 token = await jwtController.makeToken(user);
             }
             response.cookie('jwt', token);
-            response.json({
+            return response.json({
                 message:"login success"
             });
         } catch(error) {
             next(error);
         }
+    },
+
+    logout : (request, response) => {
+        response.clearCookie('jwt');
+        return response.status(200).redirect('/login.html');   
     },
 
     googleAuthenticate : (passport) => {

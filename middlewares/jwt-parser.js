@@ -9,12 +9,18 @@ module.exports = jwtParser = () => {
                         next();
                     } else {
                         const decodedToken = await jwtController.verifyToken(token);
-                        request.user = decodedToken;
-                        request.isAuthenticated = true;
+                        if (decodedToken) {
+                            request.user = decodedToken;
+                            request.isAuthenticated = true;
+                        }
                         next();
                     }
                 } catch(error) {
-                    next(error);
+                    if (error.name === "TokenExpiredError") {
+                        next();
+                    } else {
+                        next(error);
+                    }
                 }
             }
 }

@@ -9,11 +9,16 @@ const port = process.env.PORT || 3000;
 require('./db-connect')();
 
 app.use(morgan('dev'));
+app.set('view engine', 'pug');
+app.set('views', './views');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(jwtParser());
 const passport = require('./src/passport')(app);
+app.get('/', (req, res) => {
+  res.render('index');
+})
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', require('./routes/auth')(passport));

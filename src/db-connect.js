@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('./configs/db-config');
+const config = require('../configs/db-config');
 module.exports = () => {
     mongoose.connect(config.dbURI, {useNewUrlParser: true, useFindAndModify: false});
     const db = mongoose.connection;

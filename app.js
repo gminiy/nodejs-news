@@ -6,7 +6,7 @@ const jwtParser = require('./middlewares/jwt-parser')
 const app = express();
 const port = process.env.PORT || 3000;
  
-require('./db-connect')();
+require('./src/db-connect')();
 
 app.use(morgan('dev'));
 app.set('view engine', 'pug');

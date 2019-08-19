@@ -16,10 +16,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(jwtParser());
 const passport = require('./src/passport')(app);
-app.get('/', (req, res) => {
-  res.render('index');
-})
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (request, response) => {
+  if (request.isAuthenticated) {
+    response.render('index');
+  } else {
+    response.render('login');
+  }
+});
 
 app.use('/auth', require('./routes/auth')(passport));
 

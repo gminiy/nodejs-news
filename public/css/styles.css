@@ -1,9 +1,9 @@
 @import 'reset.css';
 @import 'login.css';
+@import 'signup.css';
 
 body {
     font-family: 'Helvetica Neue';
-
 }
 
 * {

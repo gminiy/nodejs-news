@@ -24,7 +24,7 @@ app.get('/', (request, response) => {
     response.render('login');
   }
 });
-
+app.get('/signup', (request, response) => response.render('signup'));
 app.use('/auth', require('./routes/auth')(passport));
 
 app.use(function (err, req, res, next) {

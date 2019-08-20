@@ -1,5 +1,5 @@
 const xhr = new XMLHttpRequest();
-const emailForm = document.getElementById('email');
+const idForm = document.getElementById('id');
 const passwordForm = document.getElementById('password');
 const loginButton = document.getElementById('login-button');
 const signupButton = document.getElementById('signup-button');
@@ -9,13 +9,13 @@ const login = () => {
     xhr.open('POST', '/auth/login');
     xhr.setRequestHeader('Content-Type', 'application/json');
     const info = {
-        "email": emailForm.value,
+        "id": idForm.value,
         "password": passwordForm.value
     };
     xhr.send(JSON.stringify(info));
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
-            console.log("success")
+            console.log("success login")
         }
     }
 }

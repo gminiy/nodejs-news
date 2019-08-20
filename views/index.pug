@@ -7,4 +7,9 @@ html(lang="en")
     title BookSquad
 
   body
-      h1.login-title BookSquad
+      .header
+        span.header_brand
+            h1.header_brand BookSquad
+        span.header_user
+            h1.header_user #{nickname}
+        a.header_logout-button(href='/auth/logout') log Out

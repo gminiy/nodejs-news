@@ -11,11 +11,6 @@ require('./src/db-connect')();
 app.use(morgan('dev'));
 app.set('view engine', 'pug');
 app.set('views', './views');
-app.all('/*', function(request, response, next) {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -25,12 +20,13 @@ const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (request, response) => {
   if (request.isAuthenticated) {
-    response.render('index');
+    response.render('index', { nickname:request.user.nickname});
   } else {
     response.render('login');
   }
 });
 app.get('/signup', (request, response) => response.render('signup'));
+app.get('/login', (request, response) => response.render('login'));
 app.use('/auth', require('./routes/auth')(passport));
 
 app.use(function (err, req, res, next) {

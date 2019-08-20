@@ -35,7 +35,7 @@ module.exports = {
 
     logout : (request, response) => {
         response.clearCookie('jwt');
-        return response.status(200).redirect('/login.html');   
+        return response.status(200).redirect('/login');   
     },
 
     googleAuthenticate : (passport) => {
@@ -43,7 +43,7 @@ module.exports = {
     },
 
     googleCallbackAuthenticate : (passport) => {
-        return passport.authenticate('google', { failureRedirect: '/login.html' });
+        return passport.authenticate('google', { failureRedirect: '/login' });
     },
 
     setTokenToCookie: (request, response) => {

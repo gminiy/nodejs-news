@@ -11,6 +11,12 @@ require('./src/db-connect')();
 app.use(morgan('dev'));
 app.set('view engine', 'pug');
 app.set('views', './views');
+app.all('/*', function(request, response, next) {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());

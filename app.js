@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (request, response) => {
   if (request.isAuthenticated) {
-    response.render('index', { nickname:request.user.nickname});
+    response.render('index', { nickname:request.user.nickname });
   } else {
     response.render('login');
   }

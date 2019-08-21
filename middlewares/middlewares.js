@@ -1,6 +1,6 @@
 const jwtController = require('../src/jwt-controller');
 
-module.exports = jwtParser = () => {
+exports.jwtParser = () => {
     return async (request, response, next) => {
                 try {
                     const token = request.cookies['jwt'];
@@ -23,4 +23,20 @@ module.exports = jwtParser = () => {
                     }
                 }
             }
+}
+
+exports.isAdmin = (request, response, next) => {
+    if(request.user.authority === 'admin') {
+        next();
+    } else {
+        response.status(403).send("관리자만 접근이 가능합니다.");
+    }
+}
+
+exports.isLoggedIn = (request, response, next) => {
+    if(request.isAuthenticated) {
+        next();
+    } else {
+        response.status(403).send("회원만 이용 가능합니다. 로그인해주세요.");
+    }
 }

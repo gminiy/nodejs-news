@@ -14,7 +14,7 @@ module.exports = {
 
     update : async (request, response, next) => {
         try {
-            const bookId = request.url.split('/')[2];
+            const bookId = request.query.id;
             const { title, author, publisher, publishedDate, description, category } = request.body;
             await Book.findByIdAndUpdate(bookId, { title, author, publisher, publishedDate, description, category });
             return response.redirect('/');

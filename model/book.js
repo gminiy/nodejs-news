@@ -46,4 +46,5 @@ Book.statics.create = function ({ title, author, publisher, publishedDate, descr
     return book = new this({ title, author, publisher, publishedDate, description, category });
 }
  
-module.exports = mongoose.model('Book', Book);
+exports.Book = mongoose.model('Book', Book);
+exports.DeletedBook = mongoose.model('DeletedBook', Book);

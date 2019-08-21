@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const bookController = require('./book-controller');
-const middlewares = require('../../middlewares/middlewares')
+const middlewares = require('../../middlewares/middlewares');
+
+router.delete('/', bookController.delete);
 router.post('/register', middlewares.isAdmin, bookController.register);
 router.put('/update', middlewares.isAdmin, bookController.update);
 

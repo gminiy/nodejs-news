@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const jwtParser = require('./middlewares/jwt-parser')
+const middlewares = require('./middlewares/middlewares')
 const app = express();
 const port = process.env.PORT || 3000;
  
@@ -15,9 +15,10 @@ app.set('views', './views');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(jwtParser());
+app.use(middlewares.jwtParser());
 const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (request, response) => {
   if (request.isAuthenticated) {
     response.render('index', { nickname:request.user.nickname});
@@ -25,6 +26,7 @@ app.get('/', (request, response) => {
     response.render('login');
   }
 });
+
 app.get('/signup', (request, response) => response.render('signup'));
 app.get('/login', (request, response) => response.render('login'));
 app.use('/auth', require('./routes/auth')(passport));

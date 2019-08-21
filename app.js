@@ -28,6 +28,7 @@ app.get('/', (request, response) => {
 app.get('/signup', (request, response) => response.render('signup'));
 app.get('/login', (request, response) => response.render('login'));
 app.use('/auth', require('./routes/auth')(passport));
+app.use('/book', require('./routes/book'));
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);

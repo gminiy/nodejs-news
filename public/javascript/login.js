@@ -3,7 +3,6 @@ const idForm = document.getElementById('id');
 const passwordForm = document.getElementById('password');
 const loginButton = document.getElementById('login-button');
 const signupButton = document.getElementById('signup-button');
-const googleLoginButton = document.getElementById('google-login-button');
 
 const login = () => {
     xhr.open('POST', '/auth/login');
@@ -29,8 +28,4 @@ passwordForm.addEventListener('keypress', (e) => {
 
 signupButton.addEventListener('click', () => {
     window.location.href = '/signup';
-});
-
-googleLoginButton.addEventListener('click', () => {
-    window.location.href = '/auth/google';
 });

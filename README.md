@@ -92,6 +92,8 @@
 * 회원 가입 요청 : POST /auth/register
 * 로그인 : POST /auth/login
 * 로그아웃 : POST /auth/logout
+* 도서등록 : POST /book/register
+
 
 ### 추후 확장
 

@@ -19,9 +19,11 @@ app.use(middlewares.jwtParser());
 const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (request, response) => {
+app.get('/', async (request, response) => {
   if (request.isAuthenticated) {
-    response.render('index', { nickname:request.user.nickname });
+    const Book = require('./model/book').Book;
+    const books = await Book.find().exec();
+    response.render('index', { nickname:request.user.nickname, authority:request.user.authority, books:books });
   } else {
     response.render('login');
   }

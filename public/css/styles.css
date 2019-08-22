@@ -1,14 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Hind+Guntur|Nanum+Gothic+Coding&display=swap');
 @import 'reset.css';
 @import 'login.css';
 @import 'signup.css';
+@import 'index.css';
 
 * {
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
-    font-family: 'Helvetica Neue';
 }
-
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Nanum Gothic Coding', monospace;
+}
 a {
     text-decoration:none;
+    color: inherit;
 }

@@ -15,7 +15,7 @@ const register = () => {
     xhr.send(JSON.stringify(info));
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
-            console.log("success")
+            window.location.href = '/';
         }
     }
 }

@@ -1,0 +1,10 @@
+.description {
+    grid-column: 1/5;
+    grid-row: 3/18;
+    vertical-align: text-top;
+}
+
+.register-button {
+    grid-column: 4/4;
+    cursor: pointer;
+}

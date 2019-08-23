@@ -23,7 +23,7 @@ app.get('/', async (request, response) => {
   if (request.isAuthenticated) {
     const Book = require('./model/book').Book;
     const books = await Book.find().exec();
-    response.render('index', { nickname:request.user.nickname, authority:request.user.authority, books:books });
+    response.render('index', { nickname:request.user.nickname, isAdmin:(request.user.authority === 'admin'), books:books });
   } else {
     response.render('login');
   }
@@ -31,6 +31,7 @@ app.get('/', async (request, response) => {
 
 app.get('/signup', (request, response) => response.render('signup'));
 app.get('/login', (request, response) => response.render('login'));
+app.get('/post', (request, response) => response.render('post', { nickname:request.user.nickname }));
 app.use('/auth', require('./routes/auth')(passport));
 app.use('/book', require('./routes/book'));
 

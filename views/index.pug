@@ -13,6 +13,8 @@ html(lang="en")
         .header_users
           .header_user
             h1.header_user #{nickname}
+          if isAdmin
+            a.header_register-post 글쓰기
           a.header_logout-button(href='/auth/logout') Log Out
       .body
         each book in books

@@ -4,8 +4,8 @@ const DeletedBook = require('../../model/book').DeletedBook;
 module.exports = {
     register : async (request, response, next) => {
         try {
-            const { title, author, publisher, publishedDate, description, category } = request.body;
-            const book = await Book.create( { title, author, publisher, publishedDate, description, category } );
+            const { title, author, publisher, publicationDate, description } = request.body;
+            const book = await Book.create( { title, author, publisher, publicationDate, description } );
             await book.save();
             return response.redirect('/');
         } catch(error) {
@@ -16,8 +16,8 @@ module.exports = {
     update : async (request, response, next) => {
         try {
             const bookId = request.query.id;
-            const { title, author, publisher, publishedDate, description, category } = request.body;
-            await Book.findByIdAndUpdate(bookId, { title, author, publisher, publishedDate, description, category });
+            const { title, author, publisher, publicationDate, description, category } = request.body;
+            await Book.findByIdAndUpdate(bookId, { title, author, publisher, publicationDate, description, category });
             return response.redirect('/');
         } catch(error) {
             next(error);

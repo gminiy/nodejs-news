@@ -14,7 +14,7 @@ html(lang="en")
           .header_user
             h1.header_user #{nickname}
           if isAdmin
-            a.header_register-post 글쓰기
+            a.header_register-post(href='/post') 글쓰기
           a.header_logout-button(href='/auth/logout') Log Out
       .body
         each book in books
@@ -27,3 +27,4 @@ html(lang="en")
               .book_publisher-box
                 span.book_publisher-q 출판사
                 span.book_publisher= book.publisher
+      script(src='javascript/index.js')

@@ -20,7 +20,7 @@ const Book = new Schema({
         required: true,
     },
 
-    publishedDate: {
+    publicationDate: {
         type: Date,
         dafault: null
     },
@@ -35,15 +35,11 @@ const Book = new Schema({
     hate: {
         type: Number,
         default: 0
-    },
-    category: {
-        type: String,
-        default: null
     }
 });
 
-Book.statics.create = function ({ title, author, publisher, publishedDate, description, category }) {
-    return book = new this({ title, author, publisher, publishedDate, description, category });
+Book.statics.create = function ({ title, author, publisher, publicationDate, description }) {
+    return book = new this({ title, author, publisher, publicationDate, description });
 }
  
 exports.Book = mongoose.model('Book', Book);

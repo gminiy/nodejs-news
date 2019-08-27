@@ -17,6 +17,7 @@ exports.jwtParser = () => {
                     }
                 } catch(error) {
                     if (error.name === "TokenExpiredError") {
+                        request.isAuthenticated = false;
                         next();
                     } else {
                         next(error);

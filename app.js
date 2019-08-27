@@ -23,7 +23,7 @@ app.get('/', async (request, response) => {
   if (request.isAuthenticated) {
     const Book = require('./model/book').Book;
     const books = await Book.find().exec();
-    response.render('index', { nickname:request.user.nickname, isAdmin:(request.user.authority === 'admin'), books:books });
+    response.render('index', { nickname:request.user.nickname, isAdmin:(request.user.authority === 'admin'), books:books, id:"123" });
   } else {
     response.render('login');
   }

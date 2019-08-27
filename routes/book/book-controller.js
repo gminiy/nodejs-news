@@ -32,7 +32,7 @@ module.exports = {
             const deletedBook = await new DeletedBook(book.toObject());
             await deletedBook.save();
             await book.remove();
-            return response.redirect('/');
+            return response.send();
         } catch(error) {
             next(error);
         }

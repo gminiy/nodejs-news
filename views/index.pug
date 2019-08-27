@@ -18,7 +18,7 @@ html(lang="en")
           a.header_logout-button(href='/auth/logout') Log Out
       .body
         each book in books
-          .book
+          .book(id=book._id)
             .book_title= book.title
             .book_info-box
               .book_author-box
@@ -27,4 +27,5 @@ html(lang="en")
               .book_publisher-box
                 span.book_publisher-q 출판사
                 span.book_publisher= book.publisher
+            button.delete-button delete
       script(src='javascript/index.js')

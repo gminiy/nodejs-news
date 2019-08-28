@@ -22,11 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 로그인한 회원만 홈으로 이동 가능.
 app.get('/', middlewares.isLoggedIn, async (request, response) => {
+  //Pagenation : query 로 page 전달. 한 페이지에 8개 표시(perPage)
   const Book = require('./model/book').Book;
   const bookCount = await Book.countDocuments().exec();
   const perPage = 8;
   const totalPage = Math.floor(bookCount/perPage) + 1;
-
   let page = request.query.page;
   if (!page) page = 1;
   const skip = (page-1) * perPage;

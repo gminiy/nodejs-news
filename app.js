@@ -20,26 +20,11 @@ app.use(middlewares.jwtParser());
 const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', async (request, response) => {
-  if (request.isAuthenticated) {
-    const Book = require('./model/book').Book;
-    const books = await Book.find().exec();
-
-    const pugVariables = {
-      nickname: request.user.nickname,
-      isAdmin: (request.user.authority === 'admin'),
-      books: books
-    }
-
-    return response.render('index', pugVariables);
-  }
-  
-  return response.render('login');
-});
-
+app.get('/', middlewares.isLoggedIn, middlewares.renderIndex);
 app.get('/signup', (request, response) => response.render('signup'));
 app.get('/login', (request, response) => response.render('login'));
 app.get('/post', (request, response) => response.render('post', { nickname:request.user.nickname }));
+
 app.use('/auth', require('./routes/auth')(passport));
 app.use('/book', require('./routes/book'));
 

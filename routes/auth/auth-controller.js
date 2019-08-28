@@ -10,6 +10,13 @@ module.exports = {
             await user.save();
             return response.send();
         } catch(error) {
+            // mongodb 에서 ID, 닉네임 중복에러 발생시 403 Error로 중복된 요소 전송.
+            const duplicationErrorRegexp = /.*(duplicate key error).*index: (\w+)_. .*/;
+            const duplicationErrorFragment = error.message.match(duplicationErrorRegexp);
+            if(duplicationErrorFragment) {
+                const duplicateElement = duplicationErrorFragment[2];
+                return response.status(403).send(duplicateElement);
+            }
             next(error);
         }
     },

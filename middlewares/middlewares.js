@@ -1,5 +1,6 @@
 const jwtController = require('../src/jwt-controller');
 
+// Token 
 exports.jwtParser = () => {
     return async (request, response, next) => {
                 try {
@@ -38,6 +39,18 @@ exports.isLoggedIn = (request, response, next) => {
     if(request.isAuthenticated) {
         next();
     } else {
-        response.status(403).send("회원만 이용 가능합니다. 로그인해주세요.");
+        response.redirect('/login');
     }
+}
+
+exports.renderIndex = async (request, response) => {
+    const Book = require('../model/book').Book;
+    const books = await Book.find().exec();
+    const pugVariables = {
+      nickname: request.user.nickname,
+      isAdmin: (request.user.authority === 'admin'),
+      books: books
+    }
+
+    return response.render('index', pugVariables);
 }

@@ -29,9 +29,14 @@ const register = () => {
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
             alert('가입되었습니다. 로그인해주세요');
-            window.location.href = '/';
-        } else if(xhr.status === 500) {
-            alert('다시 시도해주세요.');
+            return window.location.href = '/';
+        } else if(xhr.status === 403) {
+            switch(xhr.responseText) {
+                case 'id':
+                    return alert('이미 존재하는 아이디입니다.');
+                case 'nickname':
+                    return alert('이미 존재하는 닉네임입니다.');
+            }
         }
     }
 }

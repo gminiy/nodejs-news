@@ -41,6 +41,6 @@ const Book = new Schema({
 Book.statics.create = function ({ title, author, publisher, publicationDate, description }) {
     return book = new this({ title, author, publisher, publicationDate, description });
 }
- 
+
 exports.Book = mongoose.model('Book', Book);
 exports.DeletedBook = mongoose.model('DeletedBook', Book);

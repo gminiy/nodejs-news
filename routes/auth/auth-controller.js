@@ -17,7 +17,7 @@ module.exports = {
                 const duplicateElement = duplicationErrorFragment[2];
                 return response.status(403).send(duplicateElement);
             }
-            
+
             next(error);
         }
     },
@@ -33,15 +33,19 @@ module.exports = {
                 return response.send();
             }
 
-            return response.status(403).send("Invalid User");
+            return response.status(409).send("Invalid User");
         } catch(error) {
             next(error);
         }
     },
 
-    logout : (request, response) => {
-        response.clearCookie('jwt');
-        return response.status(200).redirect('/login');   
+    logout : (request, response, next) => {
+        try {
+            response.clearCookie('jwt');
+            return response.status(200).redirect('/login');   
+        } catch(error) {
+            next(error);
+        }
     },
 
     googleAuthenticate : (passport) => {

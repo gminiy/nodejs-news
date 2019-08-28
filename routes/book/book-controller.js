@@ -7,17 +7,30 @@ module.exports = {
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
-            response.render('update', { 'book': book, 'nickname':request.user.nickname, 'isAdmin':(request.user.authority === 'admin'), 'publicationDate': transformDate(book.publicationDate) });
+            const bookInfo = {
+                'book': book,
+                'nickname':request.user.nickname,
+                'isAdmin':(request.user.authority === 'admin'),
+                'publicationDate': transformDate(book.publicationDate)
+            }
+            response.render('update', bookInfo);
         } catch(error) {
             next(error);
         }
     },
 
-    sendOneBookInfo : async (request, response, next) => {
+    renderAbookPage : async (request, response, next) => {
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
-            response.render('book', { 'book': book, 'nickname':request.user.nickname, 'isAdmin':(request.user.authority === 'admin'), publicationDate:transformDate(book.publicationDate), registrationDate: transformDate(book.registrationDate)});
+            const bookInfo = {
+                'book': book,
+                'nickname':request.user.nickname,
+                'isAdmin':(request.user.authority === 'admin'),
+                'publicationDate': transformDate(book.publicationDate),
+                'registrationDate': transformDate(book.registrationDate)
+            }
+            response.render('book', bookInfo);
         } catch(error) {
             next(error);
         }
@@ -25,8 +38,8 @@ module.exports = {
 
     register : async (request, response, next) => {
         try {
-            const { title, author, publisher, publicationDate, description } = request.body;
-            const book = await Book.create( { title, author, publisher, publicationDate, description } );
+            const info = { title, author, publisher, publicationDate, description } = request.body;
+            const book = await Book.create(info);
             await book.save();
             return response.redirect('/');
         } catch(error) {
@@ -37,9 +50,9 @@ module.exports = {
     update : async (request, response, next) => {
         try {
             const bookId = request.query.id;
-            const { title, author, publisher, publicationDate, description } = request.body;
-            const registrationDate = Date.now();
-            await Book.findByIdAndUpdate(bookId, { title, author, publisher, publicationDate, description, registrationDate });
+            const info = { title, author, publisher, publicationDate, description } = request.body;
+            info.registrationDate = Date.now();
+            await Book.findByIdAndUpdate(bookId, info);
             return response.send();
         } catch(error) {
             next(error);
@@ -47,7 +60,7 @@ module.exports = {
     },
 
     delete : async (request, response, next) => {
-        //deletedBook collection으로 삭제된 책 document 이동.
+        // deletedBook collection으로 document 복사 후 삭제.
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);

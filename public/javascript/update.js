@@ -8,7 +8,7 @@ const description = document.querySelector('.description');
 
 submitButton.addEventListener('click', () => {
     const bookID = event.target.id;
-    xhr.open('PUT', `/book/update?id=${bookID}`);
+    xhr.open('PUT', `/book?id=${bookID}`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     const info = {
         "title": title.value, 

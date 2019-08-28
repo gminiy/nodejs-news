@@ -8,7 +8,7 @@ const registerButton = document.querySelector('.register-button');
 
 
 const register = () => {
-    xhr.open('POST', '/book/register');
+    xhr.open('POST', '/book');
     xhr.setRequestHeader('Content-Type', 'application/json');
     const info = {
         "title": title.value, 

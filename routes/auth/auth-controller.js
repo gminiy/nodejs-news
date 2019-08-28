@@ -9,7 +9,7 @@ module.exports = {
             const provider = 'local';
             const user = await User.create( { id, password, nickname, provider } );
             await user.save();
-            return response.redirect('/');
+            return response.send();
         } catch(error) {
             next(error);
         }
@@ -17,17 +17,16 @@ module.exports = {
 
     login : async (request, response, next) => {
         try {
-            let token;
             const { id, password } = request.body;
             const user = await User.findOneById(id);
-            if (!user) throw Error("Invalided id!");
-            if(user.verify(password)) {
-                token = await jwtController.makeToken(user);
+
+            if (user && user.verify(password)) {
+                const token = await jwtController.makeToken(user);
+                response.cookie('jwt', token);
+                return response.send();
             }
-            response.cookie('jwt', token);
-            return response.json({
-                message:"login success"
-            });
+
+            return response.status(403).send("Invalid User");
         } catch(error) {
             next(error);
         }

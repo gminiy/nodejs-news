@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const middlewares = require('./middlewares/middlewares')
 const app = express();
 const port = process.env.PORT || 3000;
- 
+
 require('./src/db-connect')();
 
 app.use(morgan('dev'));

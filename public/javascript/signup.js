@@ -12,10 +12,23 @@ const register = () => {
         "password": passwordForm.value,
         "nickname": nicknameForm.value
     };
-    xhr.send(JSON.stringify(info));
+
+    if (info.id === "") {
+        alert('ID를 입력해주세요');
+    } else if (info.nickname === "") {
+        alert('nickname을 입력해주세요')
+    } else if (info.password === "") {
+        alert('password를 입력해주세요');
+    } else {
+        xhr.send(JSON.stringify(info));
+    }
+
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
+            alert('가입되었습니다. 로그인해주세요');
             window.location.href = '/';
+        } else if(xhr.status === 500) {
+            alert('다시 시도해주세요.');
         }
     }
 }

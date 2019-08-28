@@ -14,7 +14,9 @@ const login = () => {
     xhr.send(JSON.stringify(info));
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
-            console.log("success login")
+            alert("로그인되었습니다.");
+        } else if (xhr.status === 403) {
+            alert("아이디와 비밀번호를 확인해주세요.");
         }
     }
 }

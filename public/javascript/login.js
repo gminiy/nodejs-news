@@ -16,6 +16,7 @@ const login = () => {
     xhr.onload = () => {
         if (xhr.status === 200 || xhr.status === 201) {
             alert("로그인되었습니다.");
+            return window.location.href = '/';
         } else if (xhr.status === 403) {
             alert("아이디와 비밀번호를 확인해주세요.");
         }

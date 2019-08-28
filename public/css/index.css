@@ -59,3 +59,18 @@
 .book_info-box {
     margin-bottom: 5vh;
 }
+
+.page {
+    display: flex;
+    justify-content: center;
+    margin-top: 7vh;
+    font-size: 3vh;
+}
+
+.page_number {
+    margin: 0 2vw 3vh 2vw;
+    cursor: pointer;
+}
+.page_number:hover {
+    color: blue;
+}

@@ -20,18 +20,36 @@ app.use(middlewares.jwtParser());
 const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', middlewares.isLoggedIn, middlewares.renderIndex);
+// 로그인한 회원만 홈으로 이동 가능.
+app.get('/', middlewares.isLoggedIn, async (request, response) => {
+  const Book = require('./model/book').Book;
+  const bookCount = await Book.countDocuments().exec();
+  const perPage = 8;
+  const totalPage = Math.floor(bookCount/perPage) + 1;
+
+  let page = request.query.page;
+  if (!page) page = 1;
+  const skip = (page-1) * perPage;
+  const books = await Book.find({}, null, { skip, limit:perPage }).exec();
+  const pugVariables = {
+    nickname: request.user.nickname,
+    isAdmin: (request.user.authority === 'admin'),
+    books: books,
+    page: page,
+    totalPage: totalPage
+  }
+  return response.render('index', pugVariables);
+});
+
 app.get('/signup', (request, response) => response.render('signup'));
 app.get('/login', (request, response) => response.render('login'));
 app.get('/post', (request, response) => response.render('post', { nickname:request.user.nickname }));
 app.use('/auth', require('./routes/auth')(passport));
 app.use('/book', require('./routes/book'));
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send(err.message);
+app.use((error, request, response, next) => {
+  console.log(error);
+  response.render('error');
 });
 
-app.listen(port, () => {
-    console.log(`runnning at ${port}`);
-});
+app.listen(port, () => console.log(`runnning at ${port}`));

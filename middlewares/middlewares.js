@@ -1,6 +1,5 @@
 const jwtController = require('../src/jwt-controller');
 
-// Token 
 exports.jwtParser = () => {
     return async (request, response, next) => {
                 try {
@@ -41,16 +40,4 @@ exports.isLoggedIn = (request, response, next) => {
     } else {
         response.redirect('/login');
     }
-}
-
-exports.renderIndex = async (request, response) => {
-    const Book = require('../model/book').Book;
-    const books = await Book.find().exec();
-    const pugVariables = {
-      nickname: request.user.nickname,
-      isAdmin: (request.user.authority === 'admin'),
-      books: books
-    }
-
-    return response.render('index', pugVariables);
 }

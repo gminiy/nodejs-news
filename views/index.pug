@@ -6,6 +6,8 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Books
     link(rel='stylesheet', href='css/index.css')
+    script(src="https://kit.fontawesome.com/6067a7f405.js")
+    
   body
       .header
         .header_brand
@@ -27,4 +29,7 @@ html(lang="en")
               .book_publisher-box
                 span.book_publisher-q 출판사
                 span.book_publisher= book.publisher
+      .page
+        - for(let n = 1; n <=totalPage; n++)
+          .page_number=n
       script(src='javascript/index.js')

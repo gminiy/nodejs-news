@@ -4,9 +4,12 @@ const passwordForm = document.getElementById('password');
 const nicknameForm = document.getElementById('nickname');
 const registerButton = document.getElementById('register-button');
 
+idForm.focus();
+
 const register = () => {
     xhr.open('POST', '/auth/register');
     xhr.setRequestHeader('Content-Type', 'application/json');
+    
     const info = {
         "id": idForm.value,
         "password": passwordForm.value,
@@ -16,7 +19,7 @@ const register = () => {
     if (info.id === "") {
         alert('ID를 입력해주세요');
     } else if (info.nickname === "") {
-        alert('nickname을 입력해주세요')
+        alert('nickname을 입력해주세요');
     } else if (info.password === "") {
         alert('password를 입력해주세요');
     } else {

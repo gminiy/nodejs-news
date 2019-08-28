@@ -5,7 +5,6 @@ module.exports = {
     register : async (request, response, next) => {
         try {
             const { id, password, nickname } = request.body;
-            if (!id || !password || !nickname) throw Error("id, password and nickname is required");
             const provider = 'local';
             const user = await User.create( { id, password, nickname, provider } );
             await user.save();

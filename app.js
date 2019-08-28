@@ -9,12 +9,13 @@ const port = process.env.PORT || 3000;
 require('./src/db-connect')();
 
 app.use(morgan('dev'));
+
 app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 app.use(middlewares.jwtParser());
 const passport = require('./src/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,10 +24,17 @@ app.get('/', async (request, response) => {
   if (request.isAuthenticated) {
     const Book = require('./model/book').Book;
     const books = await Book.find().exec();
-    response.render('index', { nickname:request.user.nickname, isAdmin:(request.user.authority === 'admin'), books:books, id:"123" });
-  } else {
-    response.render('login');
+
+    const pugVariables = {
+      nickname: request.user.nickname,
+      isAdmin: (request.user.authority === 'admin'),
+      books: books
+    }
+
+    return response.render('index', pugVariables);
   }
+  
+  return response.render('login');
 });
 
 app.get('/signup', (request, response) => response.render('signup'));

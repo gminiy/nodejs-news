@@ -3,6 +3,7 @@ const idForm = document.getElementById('id');
 const passwordForm = document.getElementById('password');
 const loginButton = document.getElementById('login-button');
 const signupButton = document.getElementById('signup-button');
+idForm.focus();
 
 const login = () => {
     xhr.open('POST', '/auth/login');

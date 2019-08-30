@@ -1,5 +1,6 @@
 const deleteButtons = document.getElementsByClassName('delete-button');
 const updateButtons = document.getElementsByClassName('update-button');
+const likeButton = document.querySelector('.likeButton');
 
 for (deleteButton of deleteButtons) {
     deleteButton.addEventListener('click', (event) => {
@@ -7,8 +8,8 @@ for (deleteButton of deleteButtons) {
         const bookID = book.id;
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200) {
                     window.location.href = '/';
                 } else {
                     console.error(xhr.responseText);
@@ -27,3 +28,27 @@ for (updateButton of updateButtons) {
         window.location.href = `/book/update?id=${bookID}`;
     });
 }
+
+likeButton.addEventListener('click', function () {
+    const xhr = new XMLHttpRequest();
+    const likeBox = this.childNodes[0];
+    const likeCount = likeBox.innerText;
+    const bookId = this.parentNode.id;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+                if (xhr.responseText === 'like') {
+                    likeBox.style.color = 'red';
+                    likeBox.innerText = Number(likeCount) + 1;
+                } else if (xhr.responseText === 'noLike') {
+                    likeBox.style.color = 'black';
+                    likeBox.innerText = Number(likeCount) - 1;
+                }
+            } else {
+                console.error(xhr.responseText);
+            }
+        }
+    }
+    xhr.open('PUT', `/book/like/?id=${bookId}`);
+    xhr.send();
+});

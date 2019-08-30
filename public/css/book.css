@@ -52,10 +52,10 @@
     margin-left: 2vw;
 }
 
-.book>.like {
-    color: blue;
+.book>.like>i {
+    color: red;
 }
 
-.book>.noLike {
-    color: red;
+.book>.noLike>i {
+    color: black;
 }

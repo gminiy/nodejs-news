@@ -6,6 +6,7 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Books
     link(rel='stylesheet', href='css/book.css')
+    script(src="https://kit.fontawesome.com/6067a7f405.js")
   body
       .header
         .header_brand
@@ -29,8 +30,10 @@ html(lang="en")
                 button.delete-button 삭제
                 button.update-button 수정
             if isUserLikeThisBook
-              button.like #{likeCount}
+              button.likeButton.like
+                i.far.fa-heart #{likeCount}
             else
-              button.noLike #{likeCount}
+              button.likeButton.noLike
+                i.far.fa-heart #{likeCount}
             
       script(src='javascript/book.js')

@@ -51,3 +51,11 @@
     cursor: pointer;
     margin-left: 2vw;
 }
+
+.book>.like {
+    color: blue;
+}
+
+.book>.noLike {
+    color: red;
+}

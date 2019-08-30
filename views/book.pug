@@ -28,4 +28,9 @@ html(lang="en")
               .buttons
                 button.delete-button 삭제
                 button.update-button 수정
+            if isUserLikeThisBook
+              button.like #{likeCount}
+            else
+              button.noLike #{likeCount}
+            
       script(src='javascript/book.js')

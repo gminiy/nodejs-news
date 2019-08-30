@@ -5,12 +5,12 @@ module.exports = {
         makeToken: (user) => {
             return new Promise((resolve, reject) => {
                 jwt.sign({
-                        email: user.email,
+                        id: user.id,
                         nickname: user.nickname,
                         authority: user.authority
                     },
                     secret, {
-                        expiresIn: '3d',
+                        expiresIn: '1d',
                         issuer: 'Ingleby',
                         subject: 'userInfo'
                     }, (err, token) => {

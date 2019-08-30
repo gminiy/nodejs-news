@@ -3,12 +3,25 @@ const DeletedBook = require('../../model/book').DeletedBook;
 const transformDate = require('../../src/transform-date');
 
 module.exports = {
-    updateLikeCount: async (request, response, next) => {
+    // book schema에 좋아요 누른 유저 리스트 추가. 리스트에 유저가 있으면 좋아요 취소, 없으면 좋아요 리스트에 유저 추가.
+    updateUsersPushedLike: async (request, response, next) => {
         try {
-            const { bookId, likeCount } = request.body;
-            if(likeCount === null) throw Error("Like is Null");
-            const book = await Book.findByIdAndUpdate(bookId, { like: likeCount });
-            response.send();
+            const bookId = request.query.id;
+            const userId = request.user.id;
+            const book = await Book.findById(bookId);
+            const usersPushedLike = JSON.parse(book.usersPushedLike);
+            const indexOfUser = usersPushedLike.indexOf(userId);
+            if (indexOfUser === -1) {
+                usersPushedLike.push(userId);
+                book.usersPushedLike = JSON.stringify(usersPushedLike);
+                await book.save();
+                response.send('like');
+            } else {
+                usersPushedLike.splice(indexOfUser, 1);
+                book.usersPushedLike = JSON.stringify(usersPushedLike);
+                await book.save();
+                response.send('noLike');
+            }
         } catch(error) {
             next(error);
         }
@@ -34,12 +47,15 @@ module.exports = {
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
+            const usersPushedLike = JSON.parse(book.usersPushedLike);
             const bookInfo = {
                 'book': book,
                 'nickname':request.user.nickname,
                 'isAdmin':(request.user.authority === 'admin'),
                 'publicationDate': transformDate(book.publicationDate),
-                'registrationDate': transformDate(book.registrationDate)
+                'registrationDate': transformDate(book.registrationDate),
+                'likeCount': usersPushedLike.length,
+                'isUserLikeThisBook': usersPushedLike.includes(request.user.id)
             }
             response.render('book', bookInfo);
         } catch(error) {

@@ -19,7 +19,6 @@ const Book = new Schema({
         type: String,
         required: true,
     },
-
     publicationDate: {
         type: Date,
         dafault: null
@@ -28,13 +27,9 @@ const Book = new Schema({
         type: String,
         dafault: null
     },
-    like: {
-        type: Number,
-        default: 0
-    },
-    hate: {
-        type: Number,
-        default: 0
+    usersPushedLike: {
+        type: String,
+        default: '[]'
     }
 });
 

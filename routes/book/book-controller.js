@@ -3,6 +3,17 @@ const DeletedBook = require('../../model/book').DeletedBook;
 const transformDate = require('../../src/transform-date');
 
 module.exports = {
+    updateLikeCount: async (request, response, next) => {
+        try {
+            const { bookId, likeCount } = request.body;
+            if(likeCount === null) throw Error("Like is Null");
+            const book = await Book.findByIdAndUpdate(bookId, { like: likeCount });
+            response.send();
+        } catch(error) {
+            next(error);
+        }
+    },
+
     renderUpdatePage : async (request, response, next) => {
         try {
             const bookId = request.query.id;

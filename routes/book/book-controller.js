@@ -45,8 +45,10 @@ module.exports = {
 
     renderAbookPage : async (request, response, next) => {
         try {
+            const Review = require('../../model/review').Review;
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
+            const reviews = await Review.findByBookId(bookId);
             const usersPushedLike = JSON.parse(book.usersPushedLike);
             const bookInfo = {
                 'book': book,
@@ -55,7 +57,8 @@ module.exports = {
                 'publicationDate': transformDate(book.publicationDate),
                 'registrationDate': transformDate(book.registrationDate),
                 'likeCount': usersPushedLike.length,
-                'isUserLikeThisBook': usersPushedLike.includes(request.user.id)
+                'isUserLikeThisBook': usersPushedLike.includes(request.user.id),
+                'reviews': reviews
             }
             response.render('book', bookInfo);
         } catch(error) {

@@ -25,5 +25,10 @@ Review.statics.create = function ({ bookId, writer, content }) {
     return review = new this({ bookId, writer, content });
 }
 
+Review.statics.findByBookId = function (bookId) {
+    return this.find({ 'bookId': bookId });
+}
+
+
 exports.Review = mongoose.model('Review', Review);
 exports.DeletedReivew = mongoose.model('DeletedReview', Review);

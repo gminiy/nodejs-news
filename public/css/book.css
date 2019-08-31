@@ -4,6 +4,7 @@
 .body {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .book {
@@ -11,8 +12,8 @@
     width: 70vw;
     height: 60vh;
     margin-top: 8vh;
-    border-radius: 8px;
     padding: 0 9.5vw 0 9.5vw;
+    align-self: center;
 }
 .book>.book_registration-date {
     margin-top: 2vh;
@@ -58,4 +59,46 @@
 
 .book>.noLike>i {
     color: black;
+}
+
+.reviews {
+    border: 1px solid #495057;
+    width: 80vw;
+    height: auto;
+    margin-top: 8vh;
+    padding: 3vh 7vw 3vh 7vw;
+    align-self: center;
+}
+
+.reviews_title {
+    font-size: 2vw;
+    font-weight: 700;
+    margin-bottom: 4vh;
+    border-bottom: 1px solid black;
+    padding-bottom: 2vh;
+    padding-left: 2vw;
+}
+
+.review {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2vh;
+    box-shadow: 0 2px rgba(0,0,0,.25);
+    padding-bottom: 2vh;
+    padding-left: 2vw;
+}
+
+.review>.review_writer {
+    font-weight: 700;
+    margin-right: 10vw;
+    letter-spacing: 1vw;
+}
+.review>.buttons {
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 3vw;
+}
+.review>.buttons>button {
+    cursor: pointer;
+    margin-left: 1vw;
 }

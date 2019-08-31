@@ -27,13 +27,24 @@ html(lang="en")
             .book_publication-date 출 판 일 : #{publicationDate}
             if isAdmin
               .buttons
-                button.delete-button 삭제
-                button.update-button 수정
+                button.book_delete-button 삭제
+                button.book_update-button 수정
             if isUserLikeThisBook
               button.likeButton.like
                 i.far.fa-heart #{likeCount}
             else
               button.likeButton.noLike
                 i.far.fa-heart #{likeCount}
-            
+          .reviews
+            .reviews_title Reviews
+            each review in reviews
+              .review
+                .review_writer #{review.writer}
+                .review_content #{review.content}
+                if (review.writer === nickname)
+                  .buttons
+                    button.review_delete-button 삭제
+                    button.review_update-button 수정
+
+
       script(src='javascript/book.js')

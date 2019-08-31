@@ -1,5 +1,5 @@
-const deleteButtons = document.getElementsByClassName('delete-button');
-const updateButtons = document.getElementsByClassName('update-button');
+const deleteButtons = document.getElementsByClassName('book_delete-button');
+const updateButtons = document.getElementsByClassName('book_update-button');
 const likeButton = document.querySelector('.likeButton');
 
 for (deleteButton of deleteButtons) {

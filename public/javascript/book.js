@@ -3,6 +3,24 @@ const updateButtons = document.getElementsByClassName('book_update-button');
 const likeButton = document.querySelector('.likeButton');
 const reviewsRegisterButton = document.querySelector('.reviews_register-button');
 const reviewRegisterButton = document.querySelector('.reviews_register-form_register-button');
+const reviewDeleteButton = document.querySelector('.review_delete-button');
+
+reviewDeleteButton.addEventListener('click', () => {
+    const reviewId = event.target.parentNode.parentNode.id;
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+                location.reload();
+            } else {
+                console.error(xhr.responseText);
+            }
+        }
+    }
+    xhr.open('DELETE', `/review?id=${reviewId}`);
+    xhr.send();
+
+})
 
 reviewRegisterButton.addEventListener('click', () => {
     const content = document.querySelector('.reviews_register-form_content').value;
@@ -12,11 +30,7 @@ reviewRegisterButton.addEventListener('click', () => {
         "bookId": bookId,
         "content": content
     }
-
-    if (info.content === "") {
-        return alert('내용을 입력하세요!');
-    }
-
+    if (info.content === "") return alert('내용을 입력하세요!');
     xhr.onreadystatechange = () => {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
@@ -29,7 +43,8 @@ reviewRegisterButton.addEventListener('click', () => {
     xhr.open('POST', `/review`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(info));
-})
+});
+
 reviewsRegisterButton.addEventListener('click',() => {
     const reviewsRegisterForm = document.querySelector('.reviews_register-form');
     if (reviewsRegisterForm.style.display === 'flex') {

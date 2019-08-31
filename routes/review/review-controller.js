@@ -16,6 +16,7 @@ module.exports = {
 
     delete : async (request, response, next) => {
         try {
+            // 삭제하는 리뷰는 DeletedReview로 복사 후 삭제
             const reviewId = request.query.id;
             const review = await Review.findById(reviewId);
             const deletedReview = await new DeletedReview(review.toObject());

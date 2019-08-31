@@ -22,7 +22,18 @@ module.exports = {
             const deletedReview = await new DeletedReview(review.toObject());
             await deletedReview.save();
             await review.remove();
-            response.status(200).send();
+            return response.status(200).send();
+        } catch(error) {
+            next(error);
+        }
+    },
+
+    update : async (request, response, next) => {
+        try {
+            const reviewId = request.query.id;
+            const info = { content } = request.body;
+            await Review.findByIdAndUpdate(reviewId, info);
+            return response.status(200).send();
         } catch(error) {
             next(error);
         }

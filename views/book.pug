@@ -35,8 +35,12 @@ html(lang="en")
             else
               button.likeButton.noLike
                 i.far.fa-heart #{likeCount}
-          .reviews
+          .reviews(id=book._id)
             .reviews_title Reviews
+              button.reviews_register-button 리뷰쓰기
+            .reviews_register-form
+              input.reviews_register-form_content(type="text", placeholder="내용을 입력하세요")
+              button.reviews_register-form_register-button 등록
             each review in reviews
               .review
                 .review_writer #{review.writer}

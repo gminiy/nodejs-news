@@ -46,6 +46,7 @@ app.get('/login', (request, response) => response.render('login'));
 app.get('/post', (request, response) => response.render('post', { nickname:request.user.nickname }));
 app.use('/auth', require('./routes/auth')(passport));
 app.use('/book', require('./routes/book'));
+app.use('/review', require('./routes/review'));
 
 app.use((error, request, response, next) => {
   console.log(error);

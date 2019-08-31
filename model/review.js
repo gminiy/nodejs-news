@@ -22,7 +22,7 @@ const Review = new Schema({
 });
 
 Review.statics.create = function ({ bookId, writer, content }) {
-    return review = new this({ bookId, writer, contentn });
+    return review = new this({ bookId, writer, content });
 }
 
 exports.Review = mongoose.model('Review', Review);

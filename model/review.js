@@ -31,4 +31,4 @@ Review.statics.findByBookId = function (bookId) {
 
 
 exports.Review = mongoose.model('Review', Review);
-exports.DeletedReivew = mongoose.model('DeletedReview', Review);
+exports.DeletedReview = mongoose.model('DeletedReview', Review);

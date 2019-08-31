@@ -91,12 +91,22 @@ module.exports = {
 
     delete : async (request, response, next) => {
         // deletedBook collection으로 document 복사 후 삭제.
+        // 해당 책의 review 들도 deletedReviews로 복사 후 삭제.
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
             const deletedBook = await new DeletedBook(book.toObject());
             await deletedBook.save();
             await book.remove();
+
+            const Review = require('../../model/review').Review;
+            const DeletedReview = require('../../model/review').DeletedReview;
+            const reviews = await Review.findByBookId(bookId);
+            reviews.forEach(async (review)=>{
+                const deletedReview = await new DeletedReview(review.toObject());
+                await deletedReview.save();
+            });
+            await Review.deleteMany( { bookId });
             return response.send();
         } catch(error) {
             next(error);

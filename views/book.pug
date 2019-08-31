@@ -42,7 +42,7 @@ html(lang="en")
               input.reviews_register-form_content(type="text", placeholder="내용을 입력하세요")
               button.reviews_register-form_register-button 등록
             each review in reviews
-              .review
+              .review(id=review._id)
                 .review_writer #{review.writer}
                 .review_content #{review.content}
                 if (review.writer === nickname)

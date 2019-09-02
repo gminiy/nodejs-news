@@ -1,5 +1,22 @@
 const jwtController = require('../src/jwt-controller');
 
+exports.paginate = (perPage) => {
+    //Pagination : query 로 page 전달. 한 페이지에 8개 표시(perPage)
+    return async (request, response, next) => {
+        const Book = require('../model/book').Book;
+        const bookCount = await Book.countDocuments().exec();;
+        let page = request.query.page;
+        if (!page) page = 1;
+        const skip = (page-1) * perPage;
+
+        request.page = page;
+        request.totalPage = Math.floor(bookCount/perPage) + 1;
+        request.books = await Book.find({}, null, { skip, limit:perPage }).exec();
+
+        next();
+    }
+}
+
 exports.jwtParser = () => {
     return async (request, response, next) => {
                 try {

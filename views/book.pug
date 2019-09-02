@@ -45,10 +45,12 @@ html(lang="en")
               .review(id=review._id)
                 .review_writer #{review.writer}
                 .review_content #{review.content}
+                input.review_content-input(type="text", value=review.content, style=("display:none"))
                 if (review.writer === nickname)
                   .buttons
                     button.review_delete-button 삭제
-                    button.review_update-button 수정
+                    button.review_update-form-open-button 수정
+                    button.review_update-button(style="display:none") 등록
 
 
       script(src='javascript/book.js')

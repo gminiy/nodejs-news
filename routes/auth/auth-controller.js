@@ -32,7 +32,6 @@ module.exports = {
                 response.cookie('jwt', token);
                 return response.send();
             }
-
             return response.status(409).send("Invalid User");
         } catch(error) {
             next(error);

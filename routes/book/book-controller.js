@@ -4,7 +4,7 @@ const transformDate = require('../../src/transform-date');
 
 module.exports = {
     // book schema에 좋아요 누른 유저 리스트 추가. 리스트에 유저가 있으면 좋아요 취소, 없으면 좋아요 리스트에 유저 추가.
-    updateUsersPushedLike: async (request, response, next) => {
+    async updateUsersPushedLike (request, response, next) {
         try {
             const bookId = request.query.id;
             const userId = request.user.id;
@@ -27,7 +27,7 @@ module.exports = {
         }
     },
 
-    renderUpdatePage : async (request, response, next) => {
+     async renderUpdatePage (request, response, next) {
         try {
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
@@ -43,7 +43,7 @@ module.exports = {
         }
     },
 
-    renderAbookPage : async (request, response, next) => {
+    async renderAbookPage(request, response, next) {
         try {
             const Review = require('../../model/review').Review;
             const bookId = request.query.id;
@@ -66,7 +66,7 @@ module.exports = {
         }
     },
 
-    register : async (request, response, next) => {
+    async register(request, response, next) {
         try {
             const info = { title, author, publisher, publicationDate, description } = request.body;
             const book = await Book.create(info);
@@ -77,7 +77,7 @@ module.exports = {
         }
     },
 
-    update : async (request, response, next) => {
+    async update(request, response, next) {
         try {
             const bookId = request.query.id;
             const info = { title, author, publisher, publicationDate, description } = request.body;
@@ -89,7 +89,7 @@ module.exports = {
         }
     },
 
-    delete : async (request, response, next) => {
+    async delete(request, response, next) {
         // deletedBook collection으로 document 복사 후 삭제.
         // 해당 책의 review 들도 deletedReviews로 복사 후 삭제.
         try {

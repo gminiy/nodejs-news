@@ -2,7 +2,7 @@ const User = require('../../model/user');
 const jwtController = require('../../src/jwt-controller');
 
 module.exports = {
-    register : async (request, response, next) => {
+    async register(request, response, next) {
         try {
             const { id, password, nickname } = request.body;
             const provider = 'local';
@@ -22,7 +22,7 @@ module.exports = {
         }
     },
 
-    login : async (request, response, next) => {
+    async login(request, response, next) {
         try {
             const { id, password } = request.body;
             const user = await User.findOneById(id);
@@ -38,7 +38,7 @@ module.exports = {
         }
     },
 
-    logout : (request, response, next) => {
+    logout(request, response, next) {
         try {
             response.clearCookie('jwt');
             return response.status(200).redirect('/login');   
@@ -47,15 +47,15 @@ module.exports = {
         }
     },
 
-    googleAuthenticate : (passport) => {
+    googleAuthenticate(passport) {
         return passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'] })
     },
 
-    googleCallbackAuthenticate : (passport) => {
+    googleCallbackAuthenticate(passport) {
         return passport.authenticate('google', { failureRedirect: '/login' });
     },
 
-    setTokenToCookie: (request, response) => {
+    setTokenToCookie(request, response) {
         response.cookie('jwt', request.user.token);
         response.redirect('/');
     }

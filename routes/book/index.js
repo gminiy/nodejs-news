@@ -7,7 +7,6 @@ router.get('/', bookController.renderAbookPage);
 router.put('/', middlewares.isAdmin, bookController.update);
 router.delete('/', middlewares.isAdmin, bookController.delete);
 router.get('/update', middlewares.isAdmin, bookController.renderUpdatePage);
-
 router.put('/like', bookController.updateUsersPushedLike);
 
 module.exports = router;

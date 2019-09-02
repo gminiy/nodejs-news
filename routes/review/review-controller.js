@@ -2,7 +2,7 @@ const Review = require('../../model/review').Review;
 const DeletedReview = require('../../model/review').DeletedReview;
 
 module.exports = {
-    register : async (request, response, next) => {
+    async register(request, response, next) {
         try {
             const info = { bookId, content } = request.body;
             info.writer = request.user.nickname;
@@ -14,7 +14,7 @@ module.exports = {
         }
     },
 
-    delete : async (request, response, next) => {
+    async delete(request, response, next) {
         try {
             // 삭제하는 리뷰는 DeletedReview로 복사 후 삭제
             const reviewId = request.query.id;
@@ -28,7 +28,7 @@ module.exports = {
         }
     },
 
-    update : async (request, response, next) => {
+    async update(request, response, next) {
         try {
             const reviewId = request.query.id;
             const info = { content } = request.body;

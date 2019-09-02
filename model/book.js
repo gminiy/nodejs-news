@@ -37,5 +37,10 @@ Book.statics.create = function ({ title, author, publisher, publicationDate, des
     return book = new this({ title, author, publisher, publicationDate, description });
 }
 
+Book.methods.copy = async function (Model) {
+    const deletedBook = await new Model(this.toObject());
+    return deletedBook.save();
+}
+
 exports.Book = mongoose.model('Book', Book);
 exports.DeletedBook = mongoose.model('DeletedBook', Book);

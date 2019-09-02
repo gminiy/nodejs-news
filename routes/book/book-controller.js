@@ -1,9 +1,8 @@
 const Book = require('../../model/book').Book;
-const DeletedBook = require('../../model/book').DeletedBook;
 const transformDate = require('../../src/transform-date');
 
 module.exports = {
-    // book schema에 좋아요 누른 유저 리스트 추가. 리스트에 유저가 있으면 좋아요 취소, 없으면 좋아요 리스트에 유저 추가.
+    // book document 의 usersPushedLike 리스트에 유저가 있으면 좋아요 취소, 없으면 좋아요 리스트에 유저 추가.
     async updateUsersPushedLike (request, response, next) {
         try {
             const bookId = request.query.id;
@@ -90,22 +89,18 @@ module.exports = {
     },
 
     async delete(request, response, next) {
-        // deletedBook collection으로 document 복사 후 삭제.
-        // 해당 책의 review 들도 deletedReviews로 복사 후 삭제.
+         // deletedBook collection으로 document 복사 후 삭제.
         try {
+            const DeletedBook = require('../../model/book').DeletedBook;
             const bookId = request.query.id;
             const book = await Book.findById(bookId);
-            const deletedBook = await new DeletedBook(book.toObject());
-            await deletedBook.save();
+            await book.copy(DeletedBook);
             await book.remove();
-
+        // 해당 책의 review 들도 deletedReviews로 복사 후 삭제.
             const Review = require('../../model/review').Review;
             const DeletedReview = require('../../model/review').DeletedReview;
             const reviews = await Review.findByBookId(bookId);
-            reviews.forEach(async (review)=>{
-                const deletedReview = await new DeletedReview(review.toObject());
-                await deletedReview.save();
-            });
+            reviews.forEach(async (review)=> await review.copy(DeletedReview));
             await Review.deleteMany( { bookId });
             return response.send();
         } catch(error) {

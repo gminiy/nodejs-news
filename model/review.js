@@ -29,6 +29,10 @@ Review.statics.findByBookId = function (bookId) {
     return this.find({ 'bookId': bookId });
 }
 
+Review.methods.copy = async function (Model) {
+    const deletedReview = await new Model(this.toObject());
+    return deletedReview.save();
+}
 
 exports.Review = mongoose.model('Review', Review);
 exports.DeletedReview = mongoose.model('DeletedReview', Review);

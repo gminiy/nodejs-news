@@ -40,11 +40,15 @@
 - 회원 가입 페이지
 - 로그인 페이지
 
-### DB
+### DB_SQL
+
+![EER](https://user-images.githubusercontent.com/25456956/64952850-58655d00-d8bc-11e9-81ab-29d3b3a24a4d.png)
+
+### DB_NoSQL
 
 - User
 
-| Key       | Value           |
+| Column       | Description           |
 | --------- | --------------- |
 | id        | 사용자 id   |
 | password  | 사용자 비밀번호 |
@@ -53,21 +57,21 @@
 
 - Book
 
-| Key              | Value            |
+| Column       | Description           |
 | ---------------- | ---------------- |
 | title            | 도서 제목        |
 | id               | 도서 고유 아이디 |
 | registrationDate | 등록 날짜        |
 | publisher        | 출판사           |
 | author           | 도서 저자        |
-| publicationDate    | 발행일           |
+| publicationDate    | 발행일         |
 | description      | 부가 설명        |
 | likes            | 좋아요 개수      |
 | hates            | 싫어요 개수      |
 
 - Review
 
-| Key              | Value                   |
+| Column       | Description           |
 | ---------------- | ----------------------- |
 | id               | Review 고유 아이디      |
 | bookId           | Review 달린 도서 아이디 |
@@ -79,7 +83,7 @@
 
 - Comment
 
-| Key              | Value                      |
+| Column       | Description           |
 | ---------------- | -------------------------- |
 | id               | Comment 고유 아이디        |
 | reviewID         | comment 달린 review 아이디 |
